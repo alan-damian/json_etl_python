@@ -39,6 +39,35 @@ if __name__ == '__main__':
     # de cada usuario a medida que "itera" en un bucle los datos
     # del JSON recolectado. Al finalizar el bucle deberá tener la data
     # de los 10 usuarios con cuantos títulos completó cada uno.
+    response = requests.get("https://jsonplaceholder.typicode.com/todos")
+    info = response.json()
+
+    info_user = {}
+
+    for user in info:
+        user_id = user["userId"]
+        completed = user["completed"]
+
+        if user_id in info_user:
+            info_user[user_id] += completed
+        else:
+            info_user[user_id] = completed
+
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    ax.bar(info_user.keys(), info_user.values(), color = "darkred")
+    ax.set_facecolor("whitesmoke")
+    ax.set_ylabel("libros completados")
+    ax.set_xlabel("userId")
+    ax.legend()
+
+    plt.show()        
+                
+            
+             
+            
+
 
     # Debe poder graficar dicha información en un gráfico de barras.
     # En caso de no poder hacer el gráfico comience por usar print
